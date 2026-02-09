@@ -1,0 +1,17 @@
+{
+  "name": "container",
+  "version": "1.0.0",
+  "description": "",
+  "main": "../../dist/apps/container/index.js",
+  "types": "../../dist/apps/container/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react-router-dom": "^7.13.0"
+  }
+}

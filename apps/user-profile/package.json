@@ -1,0 +1,14 @@
+{
+  "name": "user-profile",
+  "version": "1.0.0",
+  "description": "",
+  "main": "../../dist/apps/user-profile/index.js",
+  "types": "../../dist/apps/user-profile/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

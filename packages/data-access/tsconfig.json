@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.json", 
+  "compilerOptions": {
+    "outDir": "../../dist/packages/data-access",
+    "rootDir": "src",
+    "jsx": "react-jsx",
+    "moduleResolution": "NodeNext",
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "**/*.spec.ts"]
+}

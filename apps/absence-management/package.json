@@ -1,0 +1,18 @@
+{
+  "name": "absence-management",
+  "version": "1.0.0",
+  "description": "",
+  "main": "../../dist/apps/absence-management/index.js",
+  "types": "../../dist/apps/absence-management/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "data-access": "^1.0.0",
+    "ui": "^1.0.0"
+  }
+}

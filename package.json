@@ -1,0 +1,15 @@
+{
+  "name": "@mrp-mfe/source",
+  "version": "0.0.0",
+  "license": "MIT",
+  "scripts": {},
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "@nx/js": "22.4.5",
+    "nx": "22.4.5"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

@@ -30,4 +30,6 @@ export function App() {
   );
 }
 
-export default App;
+// Export as Module for Module Federation
+const Module = App;
+export default Module;

@@ -5,7 +5,8 @@
   "main": "../../dist/apps/container/index.js",
   "types": "../../dist/apps/container/index.d.ts",
   "scripts": {
-    "build": "tsc",
+    "build": "webpack --mode production",
+    "start": "webpack serve --mode development",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

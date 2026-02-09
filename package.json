@@ -2,7 +2,9 @@
   "name": "@mrp-mfe/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev": "concurrently \"npm run start --workspace=absence-management\" \"npm run start --workspace=user-profile\" \"npm run start --workspace=container\""
+  },
   "private": true,
   "workspaces": [
     "apps/*",
@@ -13,11 +15,26 @@
     "@nx/webpack": "^22.4.5"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.0",
+    "@babel/preset-react": "^7.28.5",
+    "@babel/preset-typescript": "^7.28.5",
     "@nx/js": "22.4.5",
     "@types/node": "^25.2.2",
     "@types/react": "^19.2.13",
+    "@types/react-dom": "^19.2.3",
+    "@types/webpack": "^5.28.5",
+    "@types/webpack-dev-server": "^4.7.1",
+    "babel-loader": "^10.0.0",
+    "concurrently": "^9.2.1",
+    "html-webpack-plugin": "^5.6.6",
     "nx": "22.4.5",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "webpack": "^5.105.0",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.3"
   }
 }

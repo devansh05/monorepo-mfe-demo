@@ -1,6 +1,7 @@
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import { ModuleFederationPlugin } from "@module-federation/enhanced/webpack";
 import * as path from "path";
+import webpack from "webpack";
 import type { Configuration } from "webpack";
 import type { Configuration as DevServerConfiguration } from "webpack-dev-server";
 
@@ -41,10 +42,7 @@ const config: Configuration = {
   plugins: [
     new ModuleFederationPlugin({
       name: "container",
-      remotes: {
-        absences: "absences@http://localhost:3001/remoteEntry.js",
-        profile: "profile@http://localhost:3002/remoteEntry.js",
-      },
+      remotes: {},
       shared: {
         react: {
           singleton: true,
@@ -66,6 +64,14 @@ const config: Configuration = {
     }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
+    }),
+    new webpack.DefinePlugin({
+      "process.env.ABSENCES_URL": JSON.stringify(
+        process.env.ABSENCES_URL || "http://localhost:3001",
+      ),
+      "process.env.PROFILE_URL": JSON.stringify(
+        process.env.PROFILE_URL || "http://localhost:3002",
+      ),
     }),
   ],
 };

@@ -1,32 +1,46 @@
-// Remote configuration simulating AWS CDN deployment
-// In production, these would be your actual CDN URLs
-export const REMOTE_CONFIG = {
-  absences: {
-    name: "absences",
-    // Simulating AWS CloudFront CDN URL
-    // In production: 'https://d1234abcd.cloudfront.net/absences'
-    url: process.env.ABSENCES_URL || "http://localhost:3001",
-    entry: "/remoteEntry.js",
-  },
-  profile: {
-    name: "profile",
-    // Simulating AWS CloudFront CDN URL
-    // In production: 'https://d5678efgh.cloudfront.net/profile'
-    url: process.env.PROFILE_URL || "http://localhost:3002",
-    entry: "/remoteEntry.js",
-  },
-};
+/**
+ * Remote Configuration
+ *
+ * This module provides utilities for working with remote module configurations
+ * loaded from a server manifest file. The manifest is fetched dynamically at runtime,
+ * allowing for flexible deployment and configuration management.
+ */
 
-export const getRemoteUrl = (
-  remoteName: keyof typeof REMOTE_CONFIG,
-): string => {
-  const config = REMOTE_CONFIG[remoteName];
-  return `${config.url}${config.entry}`;
-};
+import {
+  getRemoteConfig,
+  getRemoteEntryUrl,
+  type RemoteConfig,
+} from "./manifestService";
 
-export const getRemoteEntry = (
-  remoteName: keyof typeof REMOTE_CONFIG,
-): string => {
-  const config = REMOTE_CONFIG[remoteName];
-  return `${config.name}@${config.url}${config.entry}`;
-};
+/**
+ * Gets the full URL for a remote's entry file
+ *
+ * @param remoteName - Name of the remote (e.g., 'absences', 'profile')
+ * @returns Promise resolving to the complete URL of the remoteEntry.js file
+ */
+export async function getRemoteUrl(remoteName: string): Promise<string> {
+  const config = await getRemoteConfig(remoteName);
+  return getRemoteEntryUrl(config);
+}
+
+/**
+ * Gets the complete remote entry string in Module Federation format
+ *
+ * @param remoteName - Name of the remote
+ * @returns Promise resolving to a string like "remoteName@http://url/remoteEntry.js"
+ */
+export async function getRemoteEntry(remoteName: string): Promise<string> {
+  const config = await getRemoteConfig(remoteName);
+  const url = getRemoteEntryUrl(config);
+  return `${config.name}@${url}`;
+}
+
+/**
+ * Gets the complete configuration for a remote
+ *
+ * @param remoteName - Name of the remote
+ * @returns Promise resolving to the RemoteConfig object
+ */
+export async function getRemote(remoteName: string): Promise<RemoteConfig> {
+  return getRemoteConfig(remoteName);
+}

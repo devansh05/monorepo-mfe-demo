@@ -1,55 +1,55 @@
 import * as React from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { getRemoteUrl, REMOTE_CONFIG } from "./remoteConfig";
 import "./module-federation.d.ts";
 
-// Helper function to dynamically load Module Federation remotes
-const loadRemoteContainer = async (
-  containerName: string,
-  remoteUrl: string,
-): Promise<unknown> => {
-  // Load the remote script
-  await new Promise<void>((resolve, reject) => {
-    const existingScript = document.querySelector(`script[src="${remoteUrl}"]`);
-    if (existingScript) {
-      resolve();
-      return;
-    }
+// TypeScript declarations for Module Federation runtime
+declare const __webpack_init_sharing__: (scope: string) => Promise<void>;
+declare const __webpack_share_scopes__: { default: unknown };
 
-    const script = document.createElement("script");
-    script.src = remoteUrl;
-    script.onload = () => resolve();
-    script.onerror = reject;
-    document.head.appendChild(script);
-  });
-
-  // @ts-expect-error - Module Federation container is loaded dynamically
-  const container = window[containerName];
-
-  // Initialize the container with shared scope
-  await container.init(__webpack_share_scopes__.default);
-
-  return container;
-};
-
+/**
+ * Dynamically load a remote module using Module Federation
+ * The remote scripts are preloaded in bootstrap.tsx based on the manifest
+ * This function initializes the container and retrieves the specified module
+ */
 const loadRemoteModule = async (
-  remoteName: "absences" | "profile",
+  remoteName: string,
   modulePath: string,
 ): Promise<{ default: React.ComponentType }> => {
-  const config = REMOTE_CONFIG[remoteName];
-  const remoteUrl = getRemoteUrl(remoteName);
+  try {
+    // Get the remote container (loaded by bootstrap)
+    // @ts-expect-error - Remote containers are added dynamically via script tags
+    const container = window[remoteName] as Container | undefined;
 
-  const container = await loadRemoteContainer(config.name, remoteUrl);
+    if (!container) {
+      throw new Error(
+        `Remote container "${remoteName}" not found. Ensure the remote script was loaded in bootstrap.`,
+      );
+    }
 
-  // @ts-expect-error - get method exists on Module Federation container
-  const factory = await container.get(modulePath);
-  const Module = factory();
+    // Initialize the shared scope if not already initialized
+    await __webpack_init_sharing__("default");
 
-  return Module;
+    // Initialize the container with the shared scope
+    await container.init(__webpack_share_scopes__.default);
+
+    // Get the module factory from the container
+    const factory = await container.get(modulePath);
+    const module = factory();
+
+    console.log(`[Module Federation] Loaded ${remoteName}/${modulePath}`);
+    return module;
+  } catch (error) {
+    console.error(
+      `[Module Federation] Failed to load ${remoteName}/${modulePath}:`,
+      error,
+    );
+    throw error;
+  }
 };
 
-// Dynamically load the Microfrontends
+// Dynamically load the Microfrontends using React.lazy
+// The remote scripts are preloaded in bootstrap based on the manifest
 const Absences = React.lazy(() => loadRemoteModule("absences", "./Module"));
 const Profile = React.lazy(() => loadRemoteModule("profile", "./Module"));
 

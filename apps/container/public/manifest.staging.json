@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-02-10T00:00:00Z",
+  "environment": "staging",
+  "remotes": {
+    "absences": {
+      "name": "absences",
+      "url": "https://staging-cdn.yourcompany.com/absences",
+      "entry": "/remoteEntry.js",
+      "scope": "absences",
+      "module": "./Module",
+      "version": "1.0.0"
+    },
+    "profile": {
+      "name": "profile",
+      "url": "https://staging-cdn.yourcompany.com/profile",
+      "entry": "/remoteEntry.js",
+      "scope": "profile",
+      "module": "./Module",
+      "version": "1.0.0"
+    }
+  }
+}

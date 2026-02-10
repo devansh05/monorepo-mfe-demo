@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "timestamp": "2026-02-10T00:00:00Z",
+  "environment": "production",
+  "remotes": {
+    "absences": {
+      "name": "absences",
+      "url": "https://d1234abcd.cloudfront.net/absences",
+      "entry": "/remoteEntry.js",
+      "scope": "absences",
+      "module": "./Module",
+      "version": "1.0.0"
+    },
+    "profile": {
+      "name": "profile",
+      "url": "https://d5678efgh.cloudfront.net/profile",
+      "entry": "/remoteEntry.js",
+      "scope": "profile",
+      "module": "./Module",
+      "version": "1.0.0"
+    }
+  }
+}
